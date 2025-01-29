@@ -1,10 +1,11 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Terry {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String dottedLine = "    ____________________________________________________________";
-        String[] tasks = new String[100];
+        ArrayList<Task> tasks = new ArrayList<>();
         String bye = "bye";
         String list = "list";
         int currentTask = 0;
@@ -15,26 +16,48 @@ public class Terry {
         System.out.println(dottedLine);
 
         while(sc.hasNext()) {
-            String userInput = sc.nextLine();
-            if(userInput.equals("")) { //avoid empty line
-                continue;
-            }
+            String userInput = sc.nextLine().trim();
+            String[] parts = userInput.split(" ", 2);
+            String command = parts[0].toLowerCase();
+            Integer commandNumber = Integer.parseInt(parts.length > 1 ? parts[1] : "0");
+            if (userInput.isEmpty()) continue; //skip empty line
+
             System.out.println(dottedLine);
-            if (bye.equalsIgnoreCase(userInput)) { //bye
+            switch (command) {
+            case "bye":
                 System.out.println("    Bye. Hope to see you again soon!");
                 System.out.println(dottedLine);
-                break;
-            } else if(list.equalsIgnoreCase(userInput)) { //list
-                if (currentTask == 0) {
+                return;
+            case "list":
+                if (tasks.size() == 0) {
                     System.out.println("    Chill! No task!");
                 } else {
-                    for (int i = 0; i < currentTask; i++) {
-                        System.out.println("    " + (i + 1) + ". " + tasks[i]);
+                    System.out.println("    Here are the tasks in your list");
+                    for (Task task : tasks) {
+                        int index = tasks.indexOf(task);
+                        System.out.println("    " + (index + 1) + "." + task.toString());
                     }
                 }
-            } else { //add
-                tasks[currentTask] = userInput;
-                currentTask++;
+                break;
+            case "mark":
+                if (commandNumber > 0 && commandNumber < tasks.size()) {
+                    System.out.println("    Nice! I've marked this task as done:");
+                    System.out.println("      " + tasks.get(commandNumber).markAsDone());
+                } else {
+                    System.out.println("    Invalid task number!");
+                }
+                break;
+
+            case "unmark":
+                if (commandNumber > 0 && commandNumber < tasks.size()) {
+                    System.out.println("    OK, I've marked this task as not done yet:");
+                    System.out.println("      " + tasks.get(commandNumber).markAsUndone());
+                } else {
+                    System.out.println("    Invalid task number!");
+                }
+                break;
+            default:
+                tasks.add(new Task(userInput));
                 System.out.println("    added: " + userInput);
             }
             System.out.println(dottedLine);
