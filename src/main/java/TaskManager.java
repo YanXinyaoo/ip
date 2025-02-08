@@ -26,21 +26,21 @@ public class TaskManager {
     }
 
     public void markTaskAsDone(int index) {
-        if (index > 0 && index < tasks.size() + 1) {
-            Task task = tasks.get(index - 1).markAsDone();
-            System.out.println("    Nice! I've marked this task as done:");
-            System.out.println("      " + task);
-        } else {
-            System.out.println("    Invalid task index.");
-        }
+        Task task = tasks.get(index - 1).markAsDone();
+        System.out.println("    Nice! I've marked this task as done:");
+        System.out.println("      " + task);
     }
 
     public void markTaskAsUndone(int index) {
-        if (index > 0 && index < tasks.size() + 1) {
-            System.out.println("    OK, I've marked this task as not done yet:");
-            System.out.println("      " + tasks.get(index - 1).markAsUndone());
-        } else {
-            System.out.println("    Invalid task number!");
-        }
+        System.out.println("    OK, I've marked this task as not done yet:");
+        System.out.println("      " + tasks.get(index - 1).markAsUndone());
+    }
+
+    public int taskNumber() {
+        return this.tasks.size();
+    }
+
+    public boolean taskExists(int number) {
+        return number > 0 && number <= this.tasks.size();
     }
 }
