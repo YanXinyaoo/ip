@@ -1,4 +1,8 @@
+package Terry.UI;
+
 import java.util.ArrayList;
+
+import Terry.Command.Task;
 
 public class TaskManager {
     private ArrayList<Task> tasks;

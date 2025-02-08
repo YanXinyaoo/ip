@@ -1,3 +1,5 @@
+package Terry.Command;
+
 public class Events extends Task {
     private String from;
     private String to;

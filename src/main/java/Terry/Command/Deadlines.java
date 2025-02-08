@@ -1,3 +1,5 @@
+package Terry.Command;
+
 public class Deadlines extends Task{
     private String ddl;
 

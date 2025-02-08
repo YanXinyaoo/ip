@@ -1,8 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
+package Terry.UI;
+
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import Terry.Command.Deadlines;
+import Terry.Command.Events;
+import Terry.Command.ToDos;
 
 public class Terry {
     public static void main(String[] args) throws TerryException {
