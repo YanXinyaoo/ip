@@ -11,10 +11,9 @@ public class Events extends Task {
     }
 
     public Events(String description, String from, String to, boolean isDone) {
-        super(description);
+        super(description, isDone);
         this.from = from;
         this.to = to;
-        this.isDone = isDone;
     }
 
     @Override

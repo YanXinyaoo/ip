@@ -51,6 +51,10 @@ public class TaskManager {
         System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    public void saveTasks() {
+        Storage.saveTasks(tasks);
+    }
+
     public int taskNumber() {
         return this.tasks.size();
     }

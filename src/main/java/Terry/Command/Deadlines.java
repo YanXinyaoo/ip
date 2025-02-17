@@ -9,8 +9,7 @@ public class Deadlines extends Task{
     }
 
     public Deadlines(String description, String ddl, boolean isDone) {
-        super(description);
-        this.isDone = isDone;
+        super(description, isDone);
         this.ddl = ddl;
     }
 

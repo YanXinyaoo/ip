@@ -3,6 +3,7 @@ package Terry.UI;
 import java.util.Scanner;
 import Terry.Command.Deadlines;
 import Terry.Command.Events;
+import Terry.Command.Task;
 import Terry.Command.ToDos;
 
 public class Terry {
@@ -20,12 +21,12 @@ public class Terry {
         Scanner sc = new Scanner(System.in);
         String dottedLine = "    ____________________________________________________________";
         String dottedLineNextLine = "\n" + dottedLine;
+
         String filePath = "./data/Terry.txt";
 
         printWelcome();
 
-        TaskManager taskManager = new TaskManager();
-
+        TaskManager taskManager = new TaskManager(Storage.loadTasks());
 
         while (sc.hasNext()) {
             String userInput = sc.nextLine().trim();
@@ -87,6 +88,7 @@ public class Terry {
                     break;
                 }
                 System.out.println(dottedLine);
+                taskManager.saveTasks();
             } catch (TerryException e) {
                 System.out.println(e.getMessage() + dottedLineNextLine);
             } catch (Exception e) {
