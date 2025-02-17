@@ -1,3 +1,5 @@
+package Terry.Command;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -19,6 +21,10 @@ public class Task {
     public Task markAsUndone() {
         this.isDone = false;
         return this;
+    }
+
+    public String toFileFormat() {
+        return "T | " + (isDone ? "1" : "0") + " | " + description;
     }
 
     public String toString() {

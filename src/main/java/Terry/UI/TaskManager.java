@@ -1,10 +1,18 @@
+package Terry.UI;
+
 import java.util.ArrayList;
+
+import Terry.Command.Task;
 
 public class TaskManager {
     private ArrayList<Task> tasks;
 
     public TaskManager() {
         this.tasks = new ArrayList<>();
+    }
+
+    public TaskManager(ArrayList<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public void addTask(Task task) {
@@ -34,6 +42,13 @@ public class TaskManager {
     public void markTaskAsUndone(int index) {
         System.out.println("    OK, I've marked this task as not done yet:");
         System.out.println("      " + tasks.get(index - 1).markAsUndone());
+    }
+
+    public void deleteTask(int index) {
+        System.out.println("    Noted. I've removed this task:");
+        System.out.println("      " + tasks.get(index - 1));
+        tasks.remove(index - 1);
+        System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
     }
 
     public int taskNumber() {
