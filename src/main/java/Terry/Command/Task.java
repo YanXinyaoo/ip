@@ -3,6 +3,7 @@ package Terry.Command;
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected String type = "T";
 
     public Task(String description) {
         this.description = description;
@@ -29,7 +30,7 @@ public class Task {
     }
 
     public String toFileFormat() {
-        return "T | " + (isDone ? "1" : "0") + " | " + description;
+        return  " | " + (isDone ? "1" : "0") + " | " + description;
     }
 
     public String toString() {

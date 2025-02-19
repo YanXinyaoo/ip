@@ -32,6 +32,7 @@ public class Terry {
             String userInput = sc.nextLine().trim();
             String[] parts = userInput.split(" ", 2);
             String command = parts[0].toLowerCase();
+            String description = parts.length > 1 ? parts[1] : null;
             if (userInput.isEmpty()) continue;
 
             System.out.println(dottedLine);
@@ -61,20 +62,20 @@ public class Terry {
                     if (parts.length < 2 || parts[1].trim().isEmpty()) {
                         throw new TerryException(TerryException.todoErrorMessage());
                     }
-                    taskManager.addTask(new ToDos(parts[1]));
+                    taskManager.addTask(new ToDos(description));
                     break;
                 case "deadline":
                     if (!userInput.contains("/by ")) {
                         throw new TerryException(TerryException.invalidDeadlineMessage());
                     }
-                    String[] partDeadline = userInput.split("/by ", 2);
+                    String[] partDeadline = description.split("/by ", 2);
                     taskManager.addTask(new Deadlines(partDeadline[0].trim(), partDeadline[1].trim()));
                     break;
                 case "event":
                     if (!userInput.contains("/from") || !userInput.contains("/to")) {
                         throw new TerryException(TerryException.invalidEventMessage());
                     }
-                    String[] partEvent = userInput.split("/from|/to");
+                    String[] partEvent = description.split("/from|/to");
                     taskManager.addTask(new Events(partEvent[0].trim(), partEvent[1].trim(), partEvent[2].trim()));
                     break;
                 case "delete":
