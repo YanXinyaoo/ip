@@ -1,4 +1,4 @@
-package Terry.Command;
+package Terry.Task;
 
 public class Task {
     protected String description;

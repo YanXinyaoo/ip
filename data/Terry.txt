@@ -1,6 +1,7 @@
-T | 0 | 1
-T | 0 | 3
-T | 0 | safn iajfi
-E | 0 | asd| s | s 
-E | 0 | s| s | sa
-D | 0 | s | sas
+T | 1 | 123
+E | 0 | 123 | 123 | 123
+D | 0 | asd | saf
+E | 0 | 123 | a | b
+T | 0 | null
+T | 0 | null
+T | 0 | 12 /as

@@ -1,4 +1,4 @@
-package Terry.Command;
+package Terry.Task;
 
 public class Events extends Task {
     private String from;
@@ -9,22 +9,21 @@ public class Events extends Task {
         super(description);
         this.from = from;
         this.to = to;
-        this.type = "E";
     }
 
     public Events(String description, String from, String to, boolean isDone) {
         super(description, isDone);
         this.from = from;
         this.to = to;
-        this.type = "E";
     }
 
     public String toFileFormat() {
-        return this.type + super.toFileFormat() + "| " + from + " | " + to;
+        return this.type + super.toFileFormat() + " | " + from + " | " + to;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "[" + this.type + "]" + super.toString() +
+                " (from: " + from + " to: " + to + ")";
     }
 }

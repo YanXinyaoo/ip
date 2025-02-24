@@ -1,4 +1,4 @@
-package Terry.Command;
+package Terry.Task;
 
 public class ToDos extends Task {
     public ToDos(String description) {

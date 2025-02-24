@@ -1,26 +1,25 @@
-package Terry.UI;
-
+package Terry.Storage;
 
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
 
-import Terry.Command.*;
-
+import Terry.Exception.TerryException;
+import Terry.Task.*;
 
 public class Storage {
-    private static final String FILE_PATH = "./data/Terry.txt";
+    private static String FILE_PATH;
 
-
-    public Storage() {
-        ensureFileExists();
+    public Storage(String filePath) {
+        this.FILE_PATH = filePath;
+        ensureFileExists(filePath);
     }
 
 
-    private void ensureFileExists() {
+    private void ensureFileExists(String path) {
         try {
-            Path filePath = Paths.get(FILE_PATH);
+            Path filePath = Paths.get(path);
             if (!Files.exists(filePath)) {
                 Files.createDirectories(filePath.getParent());
                 Files.createFile(filePath);
@@ -43,7 +42,7 @@ public class Storage {
     }
 
 
-    public static ArrayList<Task> loadTasks() {
+    public static ArrayList<Task> loadTasks() throws TerryException {
         ArrayList<Task> tasks = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
@@ -54,24 +53,25 @@ public class Storage {
                     System.out.println("Skipping corrupted line: " + line);
                 }
             }
+        } catch (TerryException e) {
+            throw e;
         } catch (IOException e) {
-            System.out.println("Error loading tasks: " + e.getMessage());
+            System.out.println("Error reading file: " + e.getMessage());
         }
         return tasks;
     }
 
 
-    private static Task parseTask(String line) {
+    private static Task parseTask(String line) throws TerryException {
         String[] parts = line.split(" \\| ");
         if (parts.length < 3) throw new IllegalArgumentException("Invalid format");
-
 
         boolean isDone = parts[1].equals("1");
         switch (parts[0]) {
         case "T": return new ToDos(parts[2], isDone);
         case "D": return new Deadlines(parts[2], parts[3], isDone);
         case "E": return new Events(parts[2], parts[3], parts[4], isDone);
-        default: throw new IllegalArgumentException("Unknown task type");
+        default: throw new TerryException(TerryException.showLoadingError());
         }
     }
 }
