@@ -1,25 +1,45 @@
 package Terry.Task;
 
-public class Deadlines extends Task{
-    private String deadline;
-    protected String type = "D";
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
-    public Deadlines(String description, String deadline) {
+import Terry.Exception.TerryException;
+
+public class Deadlines extends Task {
+    protected LocalDateTime deadline;
+    private String type = "D";
+
+    public Deadlines(String description, String deadlineString) throws TerryException {
         super(description);
-        this.deadline = deadline;
+        setDeadline(deadlineString);
     }
 
-    public Deadlines(String description, String deadline, boolean isDone) {
+    public Deadlines(String description, boolean isDone, String deadlineString) throws TerryException {
         super(description, isDone);
-        this.deadline = deadline;
+        setDeadline(deadlineString);
+    }
+
+    public void setDeadline(String deadlineString) throws TerryException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+            this.deadline = LocalDateTime.parse(deadlineString, formatter);
+        } catch (DateTimeParseException e) {
+            throw new TerryException(TerryException.invalidDeadlineMessage());
+        }
     }
 
     public String toFileFormat() {
-        return this.type + super.toFileFormat() + " | " + deadline;
+        String deadlineTimeString = deadline.format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+        return type + " | " + (isDone ? "1" : "0") + " | " + description + " | " + deadlineTimeString;
     }
 
     @Override
     public String toString() {
-        return "[" + this.type +"]" + super.toString() + " (by: " + deadline + ")";
+        return "[D]" + super.toString() + " (by: " + deadline.format(DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm")) + ")";
+    }
+
+    public LocalDateTime getDeadline() {
+        return deadline;
     }
 }

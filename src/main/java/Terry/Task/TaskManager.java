@@ -1,5 +1,8 @@
 package Terry.Task;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import Terry.Storage.Storage;
@@ -65,6 +68,36 @@ public class TaskManager {
         tasks.remove(index - 1);
         ui.showTaskDeleted(task, tasks.size());
         Storage.saveTasks(tasks);
+    }
+
+    public void findTaskInTimeRange(String startTime, String endTime) throws TerryException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+        LocalDateTime startDate;
+        LocalDateTime endDate;
+        System.out.println(startTime + endTime);
+        try {
+            startDate = LocalDateTime.parse(startTime, formatter);
+            endDate = LocalDateTime.parse(endTime, formatter);
+        } catch (DateTimeException e) {
+            throw new TerryException(TerryException.noTasksInTimeRange());
+        }
+
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task instanceof Terry.Task.Deadlines) {
+                Terry.Task.Deadlines deadline = (Terry.Task.Deadlines) task;
+                if (!deadline.getDeadline().isBefore(startDate) && !deadline.getDeadline().isAfter(endDate)) {
+                    foundTasks.add(deadline);
+                }
+            } else if (task instanceof Terry.Task.Events) {
+                Terry.Task.Events event = (Terry.Task.Events) task;
+                if ((event.getStartTime().isEqual(startDate) || event.getStartTime().isAfter(startDate)) &&
+                        (event.getEndTime().isEqual(endDate) || event.getEndTime().isBefore(endDate))) {
+                    foundTasks.add(event);
+                }
+            }
+        }
+        ui.showTaskList(foundTasks);
     }
 
     public int taskNumber() {
