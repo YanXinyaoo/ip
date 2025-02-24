@@ -37,7 +37,6 @@ public class TerryException extends Exception {
                 "   Example: `todo Finish homework`, `list`, `mark 2`, `delete 3`.";
     }
 
-
     public static String invalidTaskNumberMessage(int maxTaskNumber) {
         return "     (ಠ_ಠ) Uh, that task number doesn’t exist...  \n" +
                 "          Please enter a proper task number from 1 to " + maxTaskNumber + ".";
@@ -45,13 +44,13 @@ public class TerryException extends Exception {
 
     public static String invalidDeadlineMessage() {
         return "   （╯°□°）╯︵( .o.)  Deadlines are serious business!  \n" +
-                "   Use this format: `deadline Homework /by tonight`  \n" +
+                "   Use this format: `deadline description /by d/M/yyyy HHmm`  \n" +
                 "   Let’s try again, champ!";
     }
 
     public static String invalidEventMessage() {
         return "      (⊙_☉) Whoa! Events need clear timing:  \n" +
-                "          Like this: `event Meeting /from 10am /to 12pm`  \n" +
+                "          Like this: `event description /from d/M/yyyy HHmm /to d/M/yyyy HHmm`  \n" +
                 "      ༼ つ ಥ_ಥ ༽つ  Give me something I can work with, please!";
     }
 
@@ -70,4 +69,10 @@ public class TerryException extends Exception {
                 "   Please use the correct format: `delete <task_number>`. \n" +
                 "   Example: `delete 2`.";
     }
+
+    public static String noTasksInTimeRange() {
+        return "   (╯°□°)╯︵ Please check if your time range is correct and try again. \n" +
+                "   Example: `find /from 1/1/2023 1200 /to 31/12/2023 1800`.";
+    }
+
 }

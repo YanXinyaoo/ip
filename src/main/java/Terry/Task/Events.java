@@ -1,29 +1,64 @@
 package Terry.Task;
 
-public class Events extends Task {
-    private String from;
-    private String to;
-    protected String type = "E";
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public Events(String description, String from, String to) {
+import Terry.Exception.TerryException;
+
+public class Events extends Task {
+    protected LocalDateTime startTime;
+    protected LocalDateTime endTime;
+    private String type = "E";
+
+    public Events(String description, String startTimeString, String endTimeString) throws TerryException {
         super(description);
-        this.from = from;
-        this.to = to;
+        setStartTime(startTimeString);
+        setEndTime(endTimeString);
     }
 
-    public Events(String description, String from, String to, boolean isDone) {
+    public Events(String description, boolean isDone, String startTimeString, String endTimeString) throws TerryException {
         super(description, isDone);
-        this.from = from;
-        this.to = to;
+        setStartTime(startTimeString);
+        setEndTime(endTimeString);
+    }
+
+    public void setStartTime(String startTimeString) throws TerryException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+            this.startTime = LocalDateTime.parse(startTimeString, formatter);
+        } catch (DateTimeException e) {
+            throw new TerryException(TerryException.invalidEventMessage());
+        }
+    }
+
+    public void setEndTime(String endTimeString) throws TerryException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+            this.endTime = LocalDateTime.parse(endTimeString, formatter);
+        } catch (DateTimeException e) {
+            throw new TerryException(TerryException.invalidEventMessage());
+        }
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     public String toFileFormat() {
-        return this.type + super.toFileFormat() + " | " + from + " | " + to;
+        String startTimeString = startTime.format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+        String endTimeString = endTime.format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+
+        return type + " | " + (isDone ? "1" : "0") + " | " + description + " | " + startTimeString + " | " + endTimeString;
     }
 
     @Override
     public String toString() {
-        return "[" + this.type + "]" + super.toString() +
-                " (from: " + from + " to: " + to + ")";
+        return "[" + type + "]" + super.toString() + " (from: " + startTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm")) +
+                " to: " + endTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm")) + ")";
     }
 }
