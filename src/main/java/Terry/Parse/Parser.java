@@ -7,6 +7,7 @@ import Terry.Storage.Storage;
 import Terry.Task.*;
 import Terry.Exception.TerryException;
 import Terry.Command.*;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
 
@@ -53,9 +54,15 @@ public class Parser {
         case "event":
             return createEventCommand(description, input);
         case "delete":
-            return createDeleteCommand(description);
+            return createDeleteCommand(description);  
         case "find":
-            return createFindCommand(description);
+            if(description.contains("/from")) {
+                String[] dates = description.split("/from|/to");
+                return new FindTasksInTimeRangeCommand(dates[1].trim(), dates[2].trim());
+            } else {
+              return createFindCommand(description);
+            }
+
         default:
             return null;
         }
@@ -93,15 +100,29 @@ public class Parser {
         if (!input.contains("/by ")) {
             throw new TerryException(TerryException.invalidDeadlineMessage());
         }
-        String[] partDeadline = description.split("/by ", 2);
-        return createTaskCommand(new Deadlines(partDeadline[0].trim(), partDeadline[1].trim()));
+        try {
+            String[] partDeadline = description.split("/by ", 2);
+            return createTaskCommand(new Deadlines(partDeadline[0].trim(), partDeadline[1].trim()));
+        } catch (DateTimeParseException e) {
+            throw new TerryException(TerryException.invalidDeadlineMessage());
+        }
     }
 
-    private Command createEventCommand(String description, String input) throws TerryException{
+    private Command createEventCommand(String description, String input) throws TerryException {
         if (!input.contains("/from") || !input.contains("/to")) {
             throw new TerryException(TerryException.invalidEventMessage());
         }
+
         String[] partEvent = description.split("/from|/to");
-        return createTaskCommand(new Events(partEvent[0].trim(), partEvent[1].trim(), partEvent[2].trim()));
+        if (partEvent.length < 3) {
+            throw new TerryException(TerryException.invalidEventMessage());
+        }
+        try {
+            String startTimeString = partEvent[1].trim();
+            String endTimeString = partEvent[2].trim();
+            return createTaskCommand(new Events(partEvent[0].trim(), startTimeString, endTimeString));
+        } catch (DateTimeParseException e) {
+            throw new TerryException(TerryException.invalidEventMessage());
+        }
     }
 }

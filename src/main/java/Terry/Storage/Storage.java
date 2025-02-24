@@ -64,14 +64,25 @@ public class Storage {
 
     private static Task parseTask(String line) throws TerryException {
         String[] parts = line.split(" \\| ");
-        if (parts.length < 3) throw new IllegalArgumentException("Invalid format");
-
+        if (parts.length < 3) {
+            throw new TerryException(TerryException.unknownCommand());
+        }
         boolean isDone = parts[1].equals("1");
         switch (parts[0]) {
-        case "T": return new ToDos(parts[2], isDone);
-        case "D": return new Deadlines(parts[2], parts[3], isDone);
-        case "E": return new Events(parts[2], parts[3], parts[4], isDone);
-        default: throw new TerryException(TerryException.showLoadingError());
+        case "T":
+            return new ToDos(parts[2], isDone);
+        case "D":
+            if (parts.length < 4) {
+                throw new TerryException(TerryException.invalidDeadlineMessage());
+            }
+            return new Deadlines(parts[2], isDone, parts[3]);
+        case "E":
+            if (parts.length < 5) {
+                throw new TerryException(TerryException.invalidEventMessage());
+            }
+            return new Events(parts[2], isDone, parts[3], parts[4]);
+        default:
+            throw new TerryException(TerryException.showLoadingError());
         }
     }
 }
