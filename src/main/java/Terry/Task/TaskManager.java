@@ -1,6 +1,7 @@
 package Terry.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Terry.Storage.Storage;
 import Terry.UI.UI;
@@ -69,6 +70,16 @@ public class TaskManager {
 
     public int taskNumber() {
         return this.tasks.size();
+    }
+
+    public void findTasksByKeyword(String keyword) {
+        List<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                matchingTasks.add(task);
+            }
+        }
+        ui.showFindResult(matchingTasks);
     }
 
     public boolean taskExists(int number) {

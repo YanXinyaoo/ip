@@ -70,4 +70,10 @@ public class TerryException extends Exception {
                 "   Please use the correct format: `delete <task_number>`. \n" +
                 "   Example: `delete 2`.";
     }
+
+    public static String findErrorMessage() {
+        return "   (╯°□°)╯︵ Invalid input format! \n" +
+                "   Please use the correct format: `find <keyword>`. \n" +
+                "   Example: `find book`.";
+    }
 }
