@@ -7,12 +7,24 @@ import Terry.Storage.Storage;
 import Terry.Task.TaskManager;
 import Terry.UI.UI;
 
+/**
+ * The main entry point of the Terry application. This class initializes
+ * necessary components and manages the flow of the program execution.
+ * It handles reading commands, parsing them, executing the appropriate tasks,
+ * and managing the exit condition.
+ */
 public class Terry {
     private final UI ui;
     private final Storage storage;
     private TaskManager tasks;
     private Parser parser;
 
+    /**
+     * Constructs a new Terry application instance.
+     *
+     * @param filePath The file path where the task data is stored.
+     * @throws TerryException If an error occurs during initialization or data loading.
+     */
     public Terry(String filePath) {
         ui = new UI();
         storage = new Storage(filePath);
@@ -25,7 +37,14 @@ public class Terry {
         }
     }
 
-
+    /**
+     * Runs the Terry application by displaying the welcome message,
+     * reading user commands, and executing the respective actions
+     * until the user decides to exit.
+     *
+     * The program continuously reads commands from the user, parses them,
+     * and executes the corresponding task, while handling any exceptions that occur.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -45,6 +64,10 @@ public class Terry {
         ui.closeScanner();
     }
 
+    /**
+     * The entry point for the program, initializing the Terry application
+     * and starting the execution.
+     */
     public static void main(String[] args) {
         new Terry("./data/Terry.txt").run();
     }
