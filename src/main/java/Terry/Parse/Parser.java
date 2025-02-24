@@ -54,14 +54,33 @@ public class Parser {
         case "event":
             return createEventCommand(description, input);
         case "delete":
-            return new DeleteCommand(parts[1]);
+            return createDeleteCommand(description);  
         case "find":
-            if(description.contains("from")) {
+            if(description.contains("/from")) {
                 String[] dates = description.split("/from|/to");
                 return new FindTasksInTimeRangeCommand(dates[1].trim(), dates[2].trim());
+            } else {
+              return createFindCommand(description);
             }
+
         default:
             return null;
+        }
+    }
+
+    private Command createDeleteCommand(String description) throws TerryException {
+        if(description == null) {
+            throw new TerryException(TerryException.deleteErrorMessage());
+        } else {
+            return new DeleteCommand(description);
+        }
+    }
+
+    private Command createFindCommand(String description) throws TerryException {
+        if(description == null) {
+            throw new TerryException(TerryException.findErrorMessage());
+        } else {
+            return new FindCommand(description);
         }
     }
 

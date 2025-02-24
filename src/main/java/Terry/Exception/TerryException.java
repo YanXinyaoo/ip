@@ -70,9 +70,14 @@ public class TerryException extends Exception {
                 "   Example: `delete 2`.";
     }
 
+    public static String findErrorMessage() {
+        return "   (╯°□°)╯︵ Invalid input format! \n" +
+                "   Please use the correct format: `find <keyword>`. \n" +
+                "   Example: `find book`.";
+    }
+
     public static String noTasksInTimeRange() {
         return "   (╯°□°)╯︵ Please check if your time range is correct and try again. \n" +
                 "   Example: `find /from 1/1/2023 1200 /to 31/12/2023 1800`.";
     }
-
 }

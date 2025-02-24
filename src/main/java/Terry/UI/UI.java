@@ -73,6 +73,17 @@ public class UI {
         return scanner.hasNextLine() ? scanner.nextLine().trim() : "";
     }
 
+    public void showFindResult(List<Task> tasks) {
+        if (tasks.size() == 0) {
+            System.out.println("    Nothing is found!");
+        } else {
+            System.out.println("    Here are the matching tasks in your list:");
+            for (Task task : tasks) {
+                System.out.println("    " + task);
+            }
+        }
+    }
+
     public void closeScanner() {
         scanner.close();
     }

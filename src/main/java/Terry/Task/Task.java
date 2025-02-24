@@ -33,6 +33,10 @@ public class Task {
         return  " | " + (isDone ? "1" : "0") + " | " + description;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }

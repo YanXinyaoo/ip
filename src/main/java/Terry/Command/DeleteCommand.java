@@ -11,7 +11,7 @@ public class DeleteCommand extends Command {
 
     public DeleteCommand(String indexStr) throws TerryException {
         try {
-            this.index = Integer.parseInt(indexStr) - 1;
+            this.index = Integer.parseInt(indexStr);
         } catch (NumberFormatException e) {
             throw new TerryException(TerryException.deleteErrorMessage());
         }
