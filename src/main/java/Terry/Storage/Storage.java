@@ -4,19 +4,30 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-
 import Terry.Exception.TerryException;
 import Terry.Task.*;
 
+/**
+ * Handles storage-related operations such as saving and loading tasks to a file.
+ */
 public class Storage {
     private static String FILE_PATH;
 
+    /**
+     * Constructs a Storage instance and ensures the file exists.
+     *
+     * @param filePath The path to the file used for storage.
+     */
     public Storage(String filePath) {
         this.FILE_PATH = filePath;
         ensureFileExists(filePath);
     }
 
-
+    /**
+     * Ensures that the specified file exists, creating it if necessary.
+     *
+     * @param path The file path to check or create.
+     */
     private void ensureFileExists(String path) {
         try {
             Path filePath = Paths.get(path);
@@ -29,7 +40,11 @@ public class Storage {
         }
     }
 
-
+    /**
+     * Saves the list of tasks to the storage file.
+     *
+     * @param tasks The list of tasks to be saved.
+     */
     public static void saveTasks(ArrayList<Task> tasks) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Task task : tasks) {
@@ -41,7 +56,12 @@ public class Storage {
         }
     }
 
-
+    /**
+     * Loads tasks from the storage file.
+     *
+     * @return A list of tasks loaded from the file.
+     * @throws TerryException If an error occurs while parsing the tasks.
+     */
     public static ArrayList<Task> loadTasks() throws TerryException {
         ArrayList<Task> tasks = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
@@ -61,7 +81,13 @@ public class Storage {
         return tasks;
     }
 
-
+    /**
+     * Parses a task from a line of text.
+     *
+     * @param line The line containing task data.
+     * @return The parsed Task object.
+     * @throws TerryException If the format is invalid.
+     */
     private static Task parseTask(String line) throws TerryException {
         String[] parts = line.split(" \\| ");
         if (parts.length < 3) {
