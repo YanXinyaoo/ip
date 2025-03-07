@@ -6,7 +6,6 @@ import Terry.Task.TaskManager;
 
 /**
  * Represents a command to list all tasks.
- * <p>
  * This command displays all the tasks in the task manager.
  */
 public class ListCommand extends Command {

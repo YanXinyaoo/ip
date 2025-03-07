@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * Represents a command to find tasks within a specified time range.
- * <p>
  * This command allows the user to search for tasks that fall within a given start and end date range.
  */
 public class FindTasksInTimeRangeCommand extends Command {

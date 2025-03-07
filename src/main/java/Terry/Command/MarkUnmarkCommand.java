@@ -7,7 +7,7 @@ import Terry.Exception.TerryException;
 
 /**
  * Represents a command to mark or unmark a task as done or undone.
- * <p>
+ *
  * This command can either mark a task as done or unmark a task, depending on the provided
  * command ("mark" or "unmark") and the task number.
  */
@@ -28,7 +28,6 @@ public class MarkUnmarkCommand extends Command {
 
     /**
      * Executes the mark or unmark command to update the task status.
-     * <p>
      * If the command is "mark", it marks the task as done. If the command is "unmark", it
      * marks the task as undone. If the input is invalid (e.g., missing task number or invalid
      * number format), an error message is displayed to the user.
