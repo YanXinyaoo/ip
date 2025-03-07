@@ -1,7 +1,6 @@
 package Terry.Command;
 
 import Terry.Storage.Storage;
-import Terry.UI.Terry;
 import Terry.UI.UI;
 import Terry.Task.TaskManager;
 import Terry.Exception.TerryException;

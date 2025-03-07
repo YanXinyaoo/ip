@@ -83,8 +83,8 @@ public class Parser {
         case "delete":
             return createDeleteCommand(description);
         case "find":
-            if (description.contains("/from")) {
-                String[] dates = description.split("/from|/to");
+            if (description.toLowerCase().contains("/from") && description.toLowerCase().contains("/to")) {
+                String[] dates = description.toLowerCase().split("/from|/to");
                 return new FindTasksInTimeRangeCommand(dates[1].trim(), dates[2].trim());
             } else {
                 return createFindCommand(description);
@@ -155,7 +155,7 @@ public class Parser {
      * @throws TerryException If the deadline format is invalid.
      */
     private Command createDeadlineCommand(String description, String input) throws TerryException {
-        if (!input.contains("/by ")) {
+        if (!input.toLowerCase().contains("/by ")) {
             throw new TerryException(TerryException.invalidDeadlineMessage());
         }
         try {
@@ -175,7 +175,7 @@ public class Parser {
      * @throws TerryException If the event format is invalid.
      */
     private Command createEventCommand(String description, String input) throws TerryException {
-        if (!input.contains("/from") || !input.contains("/to")) {
+        if (!input.toLowerCase().contains("/from") || !input.toLowerCase().contains("/to")) {
             throw new TerryException(TerryException.invalidEventMessage());
         }
 

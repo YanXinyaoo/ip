@@ -1,4 +1,4 @@
-package Terry.UI;
+package Terry;
 
 import Terry.Command.Command;
 import Terry.Exception.TerryException;
