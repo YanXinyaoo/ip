@@ -25,7 +25,7 @@ public class Terry {
      * @param filePath The file path where the task data is stored.
      * @throws TerryException If an error occurs during initialization or data loading.
      */
-    public Terry(String filePath) {
+    public Terry(String filePath) throws TerryException {
         ui = new UI();
         storage = new Storage(filePath);
         try {
@@ -68,7 +68,7 @@ public class Terry {
      * The entry point for the program, initializing the Terry application
      * and starting the execution.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TerryException {
         new Terry("./data/Terry.txt").run();
     }
 }

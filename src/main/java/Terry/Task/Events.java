@@ -92,7 +92,6 @@ public class Events extends Task {
     public String toFileFormat() {
         String startTimeString = startTime.format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
         String endTimeString = endTime.format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-
         return type + " | " + (isDone ? "1" : "0") + " | " + description + " | " + startTimeString + " | " + endTimeString;
     }
 

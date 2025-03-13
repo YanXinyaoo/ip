@@ -159,7 +159,7 @@ public class Parser {
             throw new TerryException(TerryException.invalidDeadlineMessage());
         }
         try {
-            String[] partDeadline = description.split("/by ", 2);
+            String[] partDeadline = description.split("(?i)/by ", 2);
             return createTaskCommand(new Deadlines(partDeadline[0].trim(), partDeadline[1].trim()));
         } catch (DateTimeParseException e) {
             throw new TerryException(TerryException.invalidDeadlineMessage());
@@ -179,7 +179,7 @@ public class Parser {
             throw new TerryException(TerryException.invalidEventMessage());
         }
 
-        String[] partEvent = description.split("/from|/to");
+        String[] partEvent = description.split("(?i)/from|/to");
         if (partEvent.length < 3) {
             throw new TerryException(TerryException.invalidEventMessage());
         }
