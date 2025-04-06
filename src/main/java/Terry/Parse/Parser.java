@@ -84,7 +84,7 @@ public class Parser {
             return createDeleteCommand(description);
         case "find":
             if (description.toLowerCase().contains("/from") && description.toLowerCase().contains("/to")) {
-                String[] dates = description.toLowerCase().split("/from|/to");
+                String[] dates = description.toLowerCase().split("(?i)/from|/to");
                 return new FindTasksInTimeRangeCommand(dates[1].trim(), dates[2].trim());
             } else {
                 return createFindCommand(description);
